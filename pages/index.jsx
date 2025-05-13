@@ -78,7 +78,7 @@ export default function ConfrontaBolletta() {
             <ul className="space-y-2">
               {risultato.offerte.map((offerta, index) => (
                 <li key={index} className="p-3 bg-gray-100 rounded">
-                  <p className="font-bold">{offerta.fornitore} - {offerta.nome_offerta || 'Senza nome'}</p>
+                  <p className="font-bold">{offerta.fornitore} - ID: {offerta.id}</p>
                   <p className="text-sm">Tariffa: {offerta.tariffa}</p>
                   <p className="text-sm">Totale stimato: {'\u20AC'}{offerta.totale_simulato}</p>
                   <p className="text-sm">
