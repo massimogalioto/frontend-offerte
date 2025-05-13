@@ -79,7 +79,7 @@ export default function AdminOfferte() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
           <input name="kwh_totali" type="number" step="any" placeholder="kWh totali" onChange={handleChange} className="p-2 border rounded" required />
           <input name="mesi_bolletta" type="number" placeholder="Mesi bolletta" onChange={handleChange} className="p-2 border rounded" required />
-          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia €" onChange={handleChange} className="p-2 border rounded" required />
+          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia \u20AC" onChange={handleChange} className="p-2 border rounded" required />
           <select name="tipo_fornitura" onChange={handleChange} className="p-2 border rounded">
             <option value="Luce">Luce</option>
             <option value="Gas">Gas</option>
