@@ -106,7 +106,7 @@ export default function AdminOfferte() {
                   <p><strong>Costo fisso:</strong> {'\u20AC'}{offerta.costo_fisso}</p>
                   <p><strong>Totale simulato:</strong> {'\u20AC'}{offerta.totale_simulato}</p>
                   <p><strong>Prezzo effettivo pagato:</strong> {'\u20AC'}{offerta.prezzo_effettivo_pagato}</p>
-                  <p><strong>Differenza mensile:</strong> {offerta.tipo_differenza} di {'\u20AC'}{offerta.differenza_euro_mese} ({offerta.percentuale}%)</p>
+                  <p><strong>Differenza mensile:</strong> {offerta.tipo_differenza} di {'\u20AC'}{offerta.differenza_mensile} ({offerta.percentuale}%)</p>
                 </li>
               ))}
             </ul>
