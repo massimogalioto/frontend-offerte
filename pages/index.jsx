@@ -82,7 +82,7 @@ export default function ConfrontaBolletta() {
                   <p className="text-sm">Tariffa: {offerta.tariffa}</p>
                   <p className="text-sm">Totale stimato: {'\u20AC'}{offerta.totale_simulato}</p>
                   <p className="text-sm">
-                    Differenza rispetto alla bolletta: {offerta.tipo_differenza} di {'\u20AC'}{offerta.differenza_€_mese} ({offerta.percentuale}%)
+                    Differenza rispetto alla bolletta: {offerta.tipo_differenza} di {'\u20AC'}{offerta.differenza_mensile} ({offerta.percentuale}%)
                   </p>
                 </li>
               ))}
