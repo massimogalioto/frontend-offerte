@@ -5,7 +5,7 @@ export default function UploadCte() {
   const [analisi, setAnalisi] = useState(null)
   const [errore, setErrore] = useState(null)
   const [caricamento, setCaricamento] = useState(false)
-
+ 
   const handleUpload = async () => {
     setErrore(null)
     setAnalisi(null)
