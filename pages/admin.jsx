@@ -6,7 +6,7 @@ export default function AdminOfferte() {
   const [autorizzato, setAutorizzato] = useState(false)
   const [form, setForm] = useState({
     kwh_totali: '',
-    mesi_bolletta: '',
+    periodo_bolletta: '',
     spesa_materia_energia: '',
     tipo_fornitura: 'Luce',
     data_riferimento: ''
@@ -34,6 +34,17 @@ export default function AdminOfferte() {
     setLoading(true)
 
     try {
+      const mesiRes = await fetch('https://backend-offerte-production.up.railway.app/calcola-mesi', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': 'mia_chiave_super_segreta_2024'
+        },
+        body: JSON.stringify({ periodo: form.periodo_bolletta })
+      })
+      const mesiData = await mesiRes.json()
+      if (!mesiRes.ok || !mesiData.mesi) throw new Error('Errore nel calcolo mesi')
+
       const res = await fetch('https://backend-offerte-production.up.railway.app/confronta', {
         method: 'POST',
         headers: {
@@ -41,19 +52,16 @@ export default function AdminOfferte() {
           'x-api-key': 'mia_chiave_super_segreta_2024'
         },
         body: JSON.stringify({
-          ...form,
           kwh_totali: parseFloat(form.kwh_totali),
-          mesi_bolletta: parseInt(form.mesi_bolletta),
-          spesa_materia_energia: parseFloat(form.spesa_materia_energia)
+          mesi_bolletta: mesiData.mesi,
+          spesa_materia_energia: parseFloat(form.spesa_materia_energia),
+          tipo_fornitura: form.tipo_fornitura,
+          data_riferimento: form.data_riferimento
         })
       })
 
-      if (!res.ok) {
-        const err = await res.json()
-        throw new Error(err.detail || 'Errore durante la richiesta')
-      }
-
       const data = await res.json()
+      if (!res.ok) throw new Error(data.detail || 'Errore nel confronto')
       setRisultato(data)
     } catch (err) {
       setErrore(err.message)
@@ -66,7 +74,9 @@ export default function AdminOfferte() {
     return (
       <main className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white p-6 rounded shadow text-center">
-          <p className="text-red-600 font-semibold">🔒 Accesso riservato.<br /> Aggiungi <code>?token=ufficio123</code> all’URL per accedere.</p>
+          <p className="text-red-600 font-semibold">
+            🔒 Accesso riservato.<br /> Aggiungi <code>?token=ufficio123</code> all’URL per accedere.
+          </p>
         </div>
       </main>
     )
@@ -78,8 +88,8 @@ export default function AdminOfferte() {
         <h1 className="text-2xl font-bold mb-4">Simulatore Offerte (Modalità Interna)</h1>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
           <input name="kwh_totali" type="number" step="any" placeholder="kWh totali" onChange={handleChange} className="p-2 border rounded" required />
-          <input name="mesi_bolletta" type="number" placeholder="Mesi bolletta" onChange={handleChange} className="p-2 border rounded" required />
-          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia \u20AC" onChange={handleChange} className="p-2 border rounded" required />
+          <input name="periodo_bolletta" type="text" placeholder="Periodo bolletta (es. 'GEN-MAR 2025')" onChange={handleChange} className="p-2 border rounded" required />
+          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia €" onChange={handleChange} className="p-2 border rounded" required />
           <select name="tipo_fornitura" onChange={handleChange} className="p-2 border rounded">
             <option value="Luce">Luce</option>
             <option value="Gas">Gas</option>
@@ -102,11 +112,11 @@ export default function AdminOfferte() {
                   <p><strong>Fornitore:</strong> {offerta.fornitore}</p>
                   <p><strong>Nome offerta:</strong> {offerta.nome_offerta || 'N/A'}</p>
                   <p><strong>Tariffa:</strong> {offerta.tariffa}</p>
-                  <p><strong>Prezzo kWh:</strong> {'\u20AC'}{offerta.prezzo_kwh}</p>
-                  <p><strong>Costo fisso:</strong> {'\u20AC'}{offerta.costo_fisso}</p>
-                  <p><strong>Totale simulato:</strong> {'\u20AC'}{offerta.totale_simulato}</p>
-                  <p><strong>Prezzo effettivo pagato:</strong> {'\u20AC'}{offerta.prezzo_effettivo_pagato}</p>
-                  <p><strong>Differenza mensile:</strong> {offerta.tipo_differenza} di {'\u20AC'}{offerta.differenza_mensile} ({offerta.percentuale}%)</p>
+                  <p><strong>Prezzo kWh:</strong> {'€'}{offerta.prezzo_kwh}</p>
+                  <p><strong>Costo fisso:</strong> {'€'}{offerta.costo_fisso}</p>
+                  <p><strong>Totale simulato:</strong> {'€'}{offerta.totale_simulato}</p>
+                  <p><strong>Prezzo effettivo pagato:</strong> {'€'}{offerta.prezzo_effettivo_pagato}</p>
+                  <p><strong>Differenza mensile:</strong> {offerta.tipo_differenza} di {'€'}{offerta.differenza_€_mese} ({offerta.percentuale}%)</p>
                 </li>
               ))}
             </ul>
