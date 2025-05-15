@@ -24,7 +24,6 @@ export default function SimulatoreOfferte() {
     setLoading(true)
 
     try {
-      // Step 1: calcolo mesi da IA
       const mesiRes = await fetch('https://backend-offerte-production.up.railway.app/calcola-mesi', {
         method: 'POST',
         headers: {
@@ -36,7 +35,6 @@ export default function SimulatoreOfferte() {
       const mesiData = await mesiRes.json()
       if (!mesiRes.ok || !mesiData.mesi) throw new Error('Errore nel calcolo mesi')
 
-      // Step 2: invio a /confronta
       const res = await fetch('https://backend-offerte-production.up.railway.app/confronta', {
         method: 'POST',
         headers: {
@@ -69,7 +67,7 @@ export default function SimulatoreOfferte() {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
           <input name="kwh_totali" type="number" step="any" placeholder="kWh totali" onChange={handleChange} className="p-2 border rounded" required />
           <input name="periodo_bolletta" type="text" placeholder="Periodo bolletta (es. 'GEN-MAR 2025')" onChange={handleChange} className="p-2 border rounded" required />
-          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia " onChange={handleChange} className="p-2 border rounded" required />
+          <input name="spesa_materia_energia" type="number" step="any" placeholder="Spesa materia energia" onChange={handleChange} className="p-2 border rounded" required />
           <select name="tipo_fornitura" onChange={handleChange} className="p-2 border rounded">
             <option value="Luce">Luce</option>
             <option value="Gas">Gas</option>
@@ -94,4 +92,3 @@ export default function SimulatoreOfferte() {
     </main>
   )
 }
-
