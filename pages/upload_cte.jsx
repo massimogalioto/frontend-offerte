@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { CloudUploadIcon } from '@heroicons/react/solid'
 
 export default function UploadCTE() {
   const [file, setFile] = useState(null)
@@ -25,14 +26,12 @@ export default function UploadCTE() {
     try {
       const res = await fetch('https://backend-offerte-production.up.railway.app/upload-cte', {
         method: 'POST',
-        headers: {
-          'x-api-key': 'mia_chiave_super_segreta_2024'
-        },
+        headers: { 'x-api-key': 'mia_chiave_super_segreta_2024' },
         body: formData
       })
 
       const data = await res.json()
-      if (!res.ok || data.errore) throw new Error(data.dettagli || data.errore || 'Errore durante analisi CTE')
+      if (!res.ok || data.errore) throw new Error(data.dettagli || data.errore || 'Errore durante l’analisi')
       setRisultato(data.output_ai || data)
     } catch (err) {
       setErrore(err.message)
@@ -42,7 +41,7 @@ export default function UploadCTE() {
   }
 
   const handleSalva = async () => {
-    if (!risultato) return
+    if (!risultato || !fonteCte) return
 
     setSalvataggio(true)
     setErrore(null)
@@ -63,7 +62,7 @@ export default function UploadCTE() {
 
       const data = await res.json()
       if (!res.ok || data.errore) throw new Error(data.errore || 'Errore nel salvataggio')
-      setSuccesso('✅ Offerta salvata in Airtable con successo.')
+      setSuccesso('✅ Offerta salvata in Airtable con successo!')
     } catch (err) {
       setErrore(err.message)
     } finally {
@@ -72,9 +71,10 @@ export default function UploadCTE() {
   }
 
   return (
-    <main className="min-h-screen bg-gray-100 py-10 px-4 flex flex-col items-center">
-      <div className="bg-white shadow-md rounded p-6 w-full max-w-xl">
-        <h1 className="text-2xl font-bold mb-4">📎 Carica CTE Fornitore</h1>
+    <main className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
+      <div className="bg-white p-6 rounded shadow-md w-full max-w-2xl">
+        <h1 className="text-2xl font-bold mb-4 text-center">📎 Carica Condizioni Tecnico Economiche</h1>
+
         <form onSubmit={handleUpload} className="space-y-4">
           <input
             type="file"
@@ -85,8 +85,9 @@ export default function UploadCTE() {
           />
           <button
             type="submit"
-            className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700"
+            className="flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
+            <CloudUploadIcon className="h-5 w-5" />
             {loading ? 'Analisi in corso...' : 'Analizza PDF'}
           </button>
         </form>
@@ -96,26 +97,29 @@ export default function UploadCTE() {
 
         {risultato && (
           <div className="mt-6 space-y-4">
-            <h2 className="text-xl font-semibold">📋 Dati estratti:</h2>
-            <pre className="bg-gray-100 p-4 rounded overflow-x-auto text-sm">
-              {JSON.stringify(risultato, null, 2)}
-            </pre>
+            <h2 className="text-xl font-semibold text-center">📋 Dati estratti</h2>
+
+            <ul className="bg-gray-50 p-4 rounded border text-sm space-y-1">
+              {Object.entries(risultato).map(([key, value]) => (
+                <li key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {value !== null ? value.toString() : '—'}</li>
+              ))}
+            </ul>
 
             <input
               type="text"
-              placeholder="Fonte CTE (es. Acea Q2 2025)"
               value={fonteCte}
               onChange={e => setFonteCte(e.target.value)}
-              className="p-2 border rounded w-full"
+              placeholder="Fonte CTE (es. Acea Q2 2025)"
+              className="w-full p-2 border rounded"
               required
             />
 
             <button
               onClick={handleSalva}
               disabled={salvataggio || !fonteCte}
-              className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+              className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
             >
-              {salvataggio ? 'Salvataggio...' : 'Salva in Airtable'}
+              {salvataggio ? 'Salvataggio in corso...' : 'Salva in Airtable'}
             </button>
           </div>
         )}
