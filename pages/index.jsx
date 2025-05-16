@@ -72,10 +72,10 @@ export default function Home() {
                   <p><strong>Fornitore:</strong> {offerta.fornitore}</p>
                   <p><strong>Nome offerta:</strong> {offerta.nome_offerta}</p>
                   <p><strong>Tariffa:</strong> {offerta.tariffa}</p>
-                  <p><strong>Prezzo kWh:</strong> €{offerta.prezzo_kwh}</p>
-                  <p><strong>Costo fisso:</strong> €{offerta.costo_fisso}</p>
-                  <p><strong>Totale simulato:</strong> €{offerta.totale_simulato}</p>
-                  <p><strong>Rispetto attuale:</strong> {offerta.tipo_differenza} di €{offerta.differenza_€_mese} ({offerta.percentuale}%)</p>
+                  <p><strong>Prezzo kWh:</strong> &euro{offerta.prezzo_kwh}</p>
+                  <p><strong>Costo fisso:</strong> &euro{offerta.costo_fisso}</p>
+                  <p><strong>Totale simulato:</strong> &euro{offerta.totale_simulato}</p>
+                  <p><strong>Rispetto attuale:</strong> {offerta.tipo_differenza} di &euro{offerta.differenza_euro_mese} ({offerta.percentuale}%)</p>
                 </li>
               ))}
             </ul>
