@@ -9,7 +9,9 @@
   "dependencies": {
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "formidable": "^3.5.0",
+    "form-data": "^4.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
