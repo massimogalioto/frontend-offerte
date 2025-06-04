@@ -24,7 +24,7 @@ export default function UploadCTE() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('https://backend-offerte-production.up.railway.app/upload-cte', {
+      const res = await fetch('https://backend-offerte-ocr-production.up.railway.app/upload-cte', {
         method: 'POST',
         headers: { 'x-api-key': 'mia_chiave_super_segreta_2024' },
         body: formData
@@ -48,7 +48,7 @@ export default function UploadCTE() {
     setSuccesso(null)
 
     try {
-      const res = await fetch('https://backend-offerte-production.up.railway.app/salva-offerta', {
+      const res = await fetch('https://backend-offerte-ocr-production.up.railway.app/salva-offerta', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
