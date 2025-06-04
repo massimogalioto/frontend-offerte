@@ -34,7 +34,7 @@ export default function AdminOfferte() {
     setLoading(true)
 
     try {
-      const mesiRes = await fetch('https://backend-offerte-production.up.railway.app/calcola-mesi', {
+      const mesiRes = await fetch('https://backend-offerte-ocr-production.up.railway.app/calcola-mesi', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ export default function AdminOfferte() {
       const mesiData = await mesiRes.json()
       if (!mesiRes.ok || !mesiData.mesi) throw new Error('Errore nel calcolo mesi')
 
-      const res = await fetch('https://backend-offerte-production.up.railway.app/confronta', {
+      const res = await fetch('https://backend-offerte-ocr-production.up.railway.app/confronta', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
