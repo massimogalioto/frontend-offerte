@@ -18,7 +18,7 @@ export default function Home() {
     formData.append('file', file)
 
     try {
-      const res = await fetch('https://backend-offerte-production.up.railway.app/upload-bolletta', {
+      const res = await fetch('https://backend-offerte-ocr-production.up.railway.app/upload-bolletta', {
         method: 'POST',
         headers: {
           'x-api-key': 'mia_chiave_super_segreta_2024'
