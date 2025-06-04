@@ -24,7 +24,7 @@ export default function DebugOfferte() {
     setLoading(true)
 
     try {
-      const res = await fetch('https://backend-offerte-production.up.railway.app/confronta', {
+      const res = await fetch('https://backend-offerte-ocr-production.up.railway.app/confronta', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
